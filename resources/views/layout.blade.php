@@ -98,7 +98,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark main-navigation">
         <div class="container-fluid">
             <a class="navbar-brand  mr-auto mr-lg-3 ml-3 ml-lg-0 @if ($pageSlug == 'accueil') {{ 'activee' }} @endif"
-                href="/index"><img src="{{ asset('images/djibtelogo.png') }}" alt="Accueil" height="36"
+                href="{{ url("index") }}"><img src="{{ asset('images/djibtelogo.png') }}" alt="Accueil" height="36"
                     title="Accueil"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
