@@ -1,0 +1,1 @@
+<td class="{{ $bg }} ">{{ $txt }}</td>
