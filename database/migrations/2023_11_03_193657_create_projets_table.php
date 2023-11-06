@@ -48,7 +48,7 @@ return new class extends Migration
             $table->string("migration_per")->nullable(); 
             $table->string("status")->nullable(); 
             $table->string("commentaire")->nullable(); 
-            $table->string("total_per")->nullable(); 
+            $table->integer("total_per")->nullable(); 
             $table->timestamps();
         });
     }
