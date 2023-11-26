@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CustonOnuTd extends Component
+class CustomOnuTd extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class CustonOnuTd extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.custon-onu-td');
+        return view('components.custom-onu-td');
     }
 }

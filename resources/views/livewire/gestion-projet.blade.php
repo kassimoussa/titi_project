@@ -222,7 +222,7 @@
                             <td>
                                 {{ $projet->site }}
                             </td>
-                            <x-custom-td :txt="$projet->onu" />
+                            <x-custom-onu-td :txt="$projet->onu" />
                             <x-custom-td :txt="$projet->rack" />
                             <x-custom-td :txt="$projet->fiber" />
                             <x-custom-td :txt="$projet->ip_vlan" />
