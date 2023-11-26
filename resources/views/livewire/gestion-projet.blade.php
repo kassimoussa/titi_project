@@ -44,7 +44,7 @@
                                             <span class="input-group-text  txtca   fw-bold "> ONU </span>
                                             <div class="col">
                                                 <input type="text" class="form-control" wire:model="onu"
-                                                    placeholder="Entrer du text" required> 
+                                                    placeholder="Entrer du text" required>
                                                 <div class="input-group">
                                                     <input type="date" class="form-control" wire:model="onu_start">
                                                     <input type="date" class="form-control" wire:model="onu_end">
@@ -100,14 +100,13 @@
                                     <div class="col-md-4">
                                         <div class="input-group y mb-3 ">
                                             <span class="input-group-text  txtca   fw-bold "> IP & VLAN </span>
-                                            <div class="col"> 
+                                            <div class="col">
                                                 <input type="text" class="form-control" wire:model="ip_vlan"
-                                                    placeholder="Entrer du text" required> 
+                                                    placeholder="Entrer du text" required>
                                                 <div class="input-group">
                                                     <input type="date" class="form-control"
                                                         wire:model="ip_vlan_start">
-                                                    <input type="date" class="form-control"
-                                                        wire:model="ip_vlan_end">
+                                                    <input type="date" class="form-control" wire:model="ip_vlan_end">
                                                 </div>
                                             </div>
                                         </div>
@@ -237,11 +236,11 @@
                                     data-bs-target="#edit_projet" wire:click="loadid('{{ $projet->id }}')">
                                     <i class="fas fa-edit" title="Modifier"></i>
                                 </a>
-                                {{-- <a href="{{ url('/projets/editImage', $projet) }}"
-                            class="btn btn-transparent btn-xs dropdown-item">
-                            <i class="fas fa-camera"></i> Images
-                        </a>
-                        <a href="{{ url('/projets/equipementProjet', $projet) }}"
+                                {{-- <a wire:click="images('{{ $projet->id }}')"
+                                    class="btn btn-transparent btn-xs dropdown-item">
+                                    <i class="fas fa-camera"></i> Images
+                                </a> --}}
+                                {{-- <a href="{{ url('/projets/equipementProjet', $projet) }}"
                             class="btn btn-transparent btn-xs dropdown-item">
                             <i class="fas fa-eye"></i> Voir +
                         </a> --}}
@@ -300,8 +299,8 @@
                                             <div class="input-group y mb-3 ">
                                                 <span class="input-group-text  txtca   fw-bold "> ONU </span>
                                                 <div class="col">
-                                                <input type="text" class="form-control" wire:model="onu2"
-                                                    placeholder="Entrer du text" required> 
+                                                    <input type="text" class="form-control" wire:model="onu2"
+                                                        placeholder="Entrer du text" required>
                                                     <div class="input-group">
                                                         <input type="date" class="form-control"
                                                             wire:model="onu_start2">
@@ -363,9 +362,9 @@
                                         <div class="col-md-4">
                                             <div class="input-group y mb-3 ">
                                                 <span class="input-group-text  txtca   fw-bold "> IP & VLAN </span>
-                                                <div class="col"> 
+                                                <div class="col">
                                                     <input type="text" class="form-control" wire:model="ip_vlan2"
-                                                        placeholder="Entrer du text" required> 
+                                                        placeholder="Entrer du text" required>
                                                     <div class="input-group">
                                                         <input type="date" class="form-control"
                                                             wire:model="ip_vlan_start2">

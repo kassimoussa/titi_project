@@ -11,7 +11,7 @@ class GestionProjet extends Component
 {
     public $projets, $projet_id, $site, $choix, $total_per;
     public $site2, $installation2, $installation_per2, $configuration2, $configuration_per2, $total_per2;
-    public $installation, $installation_per; 
+    public $installation, $installation_per;
     public $onu, $onu_start, $onu_end, $onu_per;
     public $onu2, $onu_start2, $onu_end2, $onu_per2;
     public $rack, $rack_start, $rack_end, $rack_per;
@@ -30,7 +30,7 @@ class GestionProjet extends Component
 
     public function mount()
     {
-     $this->choix = Choix::all();
+        $this->choix = Choix::all();
     }
 
     public function getProjets()
@@ -39,8 +39,8 @@ class GestionProjet extends Component
     }
 
     public function store()
-    { 
-        
+    {
+
         if ($this->onu == "OK" && $this->rack == "OK" && $this->fiber == "OK") {
             $this->installation = "OK";
         } elseif ($this->onu == "Non" && $this->rack == "Non" && $this->fiber == "Non") {
@@ -60,70 +60,70 @@ class GestionProjet extends Component
         //installation percentage
         if ($this->onu == "OK") {
             $this->onu_per = "100";
-        } elseif($this->onu == "Non") {
+        } elseif ($this->onu == "Non") {
             $this->onu_per = "0";
-        }else {
+        } else {
             $this->onu_per = "50";
         }
         if ($this->rack == "OK") {
             $this->rack_per = "100";
-        } elseif($this->rack == "Non") {
+        } elseif ($this->rack == "Non") {
             $this->rack_per = "0";
-        }else {
+        } else {
             $this->rack_per = "50";
         }
         if ($this->fiber == "OK") {
             $this->fiber_per = "100";
-        } elseif($this->fiber == "Non") {
+        } elseif ($this->fiber == "Non") {
             $this->fiber_per = "0";
-        }else {
+        } else {
             $this->fiber_per = "50";
         }
 
         //configuration percentage
         if ($this->ip_vlan == "OK") {
             $this->ip_vlan_per = "100";
-        } elseif($this->ip_vlan == "Non") {
+        } elseif ($this->ip_vlan == "Non") {
             $this->ip_vlan_per = "0";
-        }else {
+        } else {
             $this->ip_vlan_per = "50";
         }
         if ($this->ssh == "OK") {
             $this->ssh_per = "100";
-        } elseif($this->ssh == "Non") {
+        } elseif ($this->ssh == "Non") {
             $this->ssh_per = "0";
-        }else {
+        } else {
             $this->ssh_per = "50";
         }
         if ($this->snmp == "OK") {
             $this->snmp_per = "100";
-        } elseif($this->snmp == "Non") {
+        } elseif ($this->snmp == "Non") {
             $this->snmp_per = "0";
-        }else {
+        } else {
             $this->snmp_per = "50";
         }
-        
+
         //migration percentage
         if ($this->migration == "OK") {
             $this->migration_per = "100";
-        } elseif($this->migration == "Non") {
+        } elseif ($this->migration == "Non") {
             $this->migration_per = "0";
-        }else {
+        } else {
             $this->migration_per = "50";
         }
 
-        $this->installation_per = ($this->onu_per +$this->rack_per + $this->fiber_per) / 3;
-        $this->configuration_per = ($this->ip_vlan_per +$this->ssh_per + $this->snmp_per) / 3; 
+        $this->installation_per = ($this->onu_per + $this->rack_per + $this->fiber_per) / 3;
+        $this->configuration_per = ($this->ip_vlan_per + $this->ssh_per + $this->snmp_per) / 3;
         $this->total_per = ($this->installation_per +  $this->configuration_per + $this->migration_per) / 3;
 
 
-        $projet = new Projet(); 
+        $projet = new Projet();
         $projet->site = Str::title($this->site);
         $projet->installation = $this->installation;
         $projet->installation_per = $this->installation_per;
         $projet->onu = $this->onu;
         $projet->onu_start = $this->onu_start;
-        $projet->onu_end = $this->onu_end; 
+        $projet->onu_end = $this->onu_end;
         $projet->onu_per = $this->onu_per;
         $projet->rack = $this->rack;
         $projet->rack_start = $this->rack_start;
@@ -149,13 +149,13 @@ class GestionProjet extends Component
         $projet->snmp_per = $this->snmp_per;
         $projet->migration = $this->migration;
         $projet->migration_start = $this->migration_start;
-        $projet->migration_end = $this->migration_end;  
+        $projet->migration_end = $this->migration_end;
         $projet->migration_per = $this->migration_per;
         $projet->total_per = $this->total_per;
-        
+
         $query = $projet->save();
 
-        if ($query) {  
+        if ($query) {
             $this->getProjets();
             $this->dispatchBrowserEvent(
                 'alert',
@@ -181,39 +181,39 @@ class GestionProjet extends Component
         $this->onu2 = $projet->onu;
         $this->onu_start2 = $projet->onu_start;
         $this->onu_end2 = $projet->onu_end;
-        $this->onu_per2 = $projet->onu_per; 
+        $this->onu_per2 = $projet->onu_per;
         $this->rack2 = $projet->rack;
         $this->rack_start2 = $projet->rack_start;
         $this->rack_end2 = $projet->rack_end;
-        $this->rack_per2 = $projet->rack_per; 
+        $this->rack_per2 = $projet->rack_per;
         $this->fiber2 = $projet->fiber;
         $this->fiber_start2 = $projet->fiber_start;
         $this->fiber_end2 = $projet->fiber_end;
-        $this->fiber_per2 = $projet->fiber_per; 
+        $this->fiber_per2 = $projet->fiber_per;
         $this->configuration2 = $projet->configuration;
         $this->configuration_per2 = $projet->configuration_per;
         $this->ip_vlan2 = $projet->ip_vlan;
         $this->ip_vlan_start2 = $projet->ip_vlan_start;
         $this->ip_vlan_end2 = $projet->ip_vlan_end;
-        $this->ip_vlan_per2 = $projet->ip_vlan_per; 
+        $this->ip_vlan_per2 = $projet->ip_vlan_per;
         $this->ssh2 = $projet->ssh;
         $this->ssh_start2 = $projet->ssh_start;
         $this->ssh_end2 = $projet->ssh_end;
-        $this->ssh_per2 = $projet->ssh_per; 
+        $this->ssh_per2 = $projet->ssh_per;
         $this->snmp2 = $projet->snmp;
         $this->snmp_start2 = $projet->snmp_start;
         $this->snmp_end2 = $projet->snmp_end;
-        $this->snmp_per2 = $projet->snmp_per; 
+        $this->snmp_per2 = $projet->snmp_per;
         $this->migration2 = $projet->migration;
         $this->migration_start2 = $projet->migration_start;
         $this->migration_end2 = $projet->migration_end;
-        $this->migration_per2 = $projet->migration_per; 
-        $this->total_per2 = $projet->total_per; 
+        $this->migration_per2 = $projet->migration_per;
+        $this->total_per2 = $projet->total_per;
     }
     public function update()
     {
         $projet = Projet::find($this->projet_id);
-        
+
         if ($this->onu2 == "OK" && $this->rack2 == "OK" && $this->fiber2 == "OK") {
             $this->installation2 = "OK";
         } elseif ($this->onu2 == "Non" && $this->rack2 == "Non" && $this->fiber2 == "Non") {
@@ -233,60 +233,60 @@ class GestionProjet extends Component
         //installation percentage
         if ($this->onu2 == "OK") {
             $this->onu_per2 = "100";
-        } elseif($this->onu2 == "Non") {
+        } elseif ($this->onu2 == "Non") {
             $this->onu_per2 = "0";
-        }else {
+        } else {
             $this->onu_per2 = "50";
         }
         if ($this->rack2 == "OK") {
             $this->rack_per2 = "100";
-        } elseif($this->rack2 == "Non") {
+        } elseif ($this->rack2 == "Non") {
             $this->rack_per2 = "0";
-        }else {
+        } else {
             $this->rack_per2 = "50";
         }
         if ($this->fiber2 == "OK") {
             $this->fiber_per2 = "100";
-        } elseif($this->fiber2 == "Non") {
+        } elseif ($this->fiber2 == "Non") {
             $this->fiber_per2 = "0";
-        }else {
+        } else {
             $this->fiber_per2 = "50";
         }
 
         //configuration percentage
         if ($this->ip_vlan2 == "OK") {
             $this->ip_vlan_per2 = "100";
-        } elseif($this->ip_vlan2 == "Non") {
+        } elseif ($this->ip_vlan2 == "Non") {
             $this->ip_vlan_per2 = "0";
-        }else {
+        } else {
             $this->ip_vlan_per2 = "50";
         }
         if ($this->ssh2 == "OK") {
             $this->ssh_per2 = "100";
-        } elseif($this->ssh2 == "Non") {
+        } elseif ($this->ssh2 == "Non") {
             $this->ssh_per2 = "0";
-        }else {
+        } else {
             $this->ssh_per2 = "50";
         }
         if ($this->snmp2 == "OK") {
             $this->snmp_per2 = "100";
-        } elseif($this->snmp2 == "Non") {
+        } elseif ($this->snmp2 == "Non") {
             $this->snmp_per2 = "0";
-        }else {
+        } else {
             $this->snmp_per2 = "50";
         }
-        
+
         //migration percentage
         if ($this->migration2 == "OK") {
             $this->migration_per2 = "100";
-        } elseif($this->migration2 == "Non") {
+        } elseif ($this->migration2 == "Non") {
             $this->migration_per2 = "0";
-        }else {
+        } else {
             $this->migration_per2 = "50";
         }
 
-        $this->installation_per2 = ($this->onu_per2 +$this->rack_per2 + $this->fiber_per2) / 3;
-        $this->configuration_per2 = ($this->ip_vlan_per2 +$this->ssh_per2 + $this->snmp_per2) / 3; 
+        $this->installation_per2 = ($this->onu_per2 + $this->rack_per2 + $this->fiber_per2) / 3;
+        $this->configuration_per2 = ($this->ip_vlan_per2 + $this->ssh_per2 + $this->snmp_per2) / 3;
         $this->total_per2 = ($this->installation_per2 +  $this->configuration_per2 + $this->migration_per2) / 3;
 
         $query = $projet->update([
@@ -325,7 +325,7 @@ class GestionProjet extends Component
             'migration_per' => $this->migration_per2,
             'total_per' => $this->total_per2,
         ]);
-        
+
         if ($query) {
             $this->getProjets();
             $this->dispatchBrowserEvent(
@@ -340,12 +340,11 @@ class GestionProjet extends Component
             );
             $this->dispatchBrowserEvent('close-modal');
         }
-
     }
 
     public function delete()
     {
-        $projet = Projet::find($this->projet_id); 
+        $projet = Projet::find($this->projet_id);
         $projet->delete();
         $this->getProjets();
 
@@ -353,6 +352,11 @@ class GestionProjet extends Component
             'alert',
             ['type' => 'success',  'message' => 'Suppression éffectuée avec succès!']
         );
+    }
+
+    public function images($projet_id)
+    {
+        return redirect()->route('images')->with($projet_id);
     }
 
     public function render()
