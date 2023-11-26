@@ -25,7 +25,7 @@
 				<form class="login100-form validate-form" action="{{ url('check') }}" method="POST">
                     @csrf
 					<span class="login100-form-title p-b-33">
-						Projet :::
+						Projet :: Migration 
 					</span>
 
 					<div class="wrap-input100 validate-input" >

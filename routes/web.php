@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('connexion');
 });
-Route::post('/check', [AdminController::class, 'check']);
+Route::post('check', [AdminController::class, 'check']);
 
 
 Route::group(['middleware' => ['logged']], function () {
-    Route::get('/logout', [AdminController::class, 'logout']);
+    Route::get('logout', [AdminController::class, 'logout']);
 
-    Route::get('/index', function () {
+    Route::get('index', function () {
         return view('accueil');
     });
 });

@@ -241,7 +241,7 @@
                             <x-custom-td :txt="$projet->migration" />
 
 
-                            <td class="td-actions">
+                            <td class="td-actions d-flex ">
                                 <a class="btn btn-transparent btn-xs dropdown-item" data-bs-toggle="modal"
                                     data-bs-target="#edit_projet" wire:click="loadid('{{ $projet->id }}')">
                                     <i class="fas fa-edit" title="Modifier"></i>
