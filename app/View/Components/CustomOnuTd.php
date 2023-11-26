@@ -14,8 +14,17 @@ class CustomOnuTd extends Component
     public $txt, $bg;
     public function __construct($txt)
     {
-        $this->txt = $txt;
-        $this->bg = 'bg-success ';
+        $this->txt = $txt; 
+        
+        if ($txt == 'En cours') {
+            $this->bg = 'bg-warning ';
+        } elseif ($txt == 'Non') {
+            $this->bg = 'bg-secondary text-white ';
+        } elseif ($txt == 'Sur site') {
+            $this->bg = 'bg-success ';
+        } else {
+            $this->bg = 'bg-success ';
+        }
     }
 
     /**
