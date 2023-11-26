@@ -43,13 +43,8 @@
                                         <div class="input-group y mb-3 ">
                                             <span class="input-group-text  txtca   fw-bold "> ONU </span>
                                             <div class="col">
-                                                <select class="form-control" wire:model="onu">
-                                                    <option value="">--Select option--</option>
-                                                    @foreach ($choix as $choi)
-                                                        <option value="{{ $choi->option }}">{{ $choi->option }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" class="form-control" wire:model="onu"
+                                                    placeholder="Entrer du text" required> 
                                                 <div class="input-group">
                                                     <input type="date" class="form-control" wire:model="onu_start">
                                                     <input type="date" class="form-control" wire:model="onu_end">
@@ -105,18 +100,14 @@
                                     <div class="col-md-4">
                                         <div class="input-group y mb-3 ">
                                             <span class="input-group-text  txtca   fw-bold "> IP & VLAN </span>
-                                            <div class="col">
-                                                <select class="form-control" wire:model="ip_vlan">
-                                                    <option value="">--Select option--</option>
-                                                    @foreach ($choix as $choi)
-                                                        <option value="{{ $choi->option }}">{{ $choi->option }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col"> 
+                                                <input type="text" class="form-control" wire:model="ip_vlan"
+                                                    placeholder="Entrer du text" required> 
                                                 <div class="input-group">
                                                     <input type="date" class="form-control"
                                                         wire:model="ip_vlan_start">
-                                                    <input type="date" class="form-control" wire:model="ip_vlan_end">
+                                                    <input type="date" class="form-control"
+                                                        wire:model="ip_vlan_end">
                                                 </div>
                                             </div>
                                         </div>
@@ -309,13 +300,8 @@
                                             <div class="input-group y mb-3 ">
                                                 <span class="input-group-text  txtca   fw-bold "> ONU </span>
                                                 <div class="col">
-                                                    <select class="form-control" wire:model="onu2">
-                                                        <option>--Select option--</option>
-                                                        @foreach ($choix as $choi)
-                                                            <option value="{{ $choi->option }}">{{ $choi->option }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <input type="text" class="form-control" wire:model="onu2"
+                                                    placeholder="Entrer du text" required> 
                                                     <div class="input-group">
                                                         <input type="date" class="form-control"
                                                             wire:model="onu_start2">
@@ -377,14 +363,9 @@
                                         <div class="col-md-4">
                                             <div class="input-group y mb-3 ">
                                                 <span class="input-group-text  txtca   fw-bold "> IP & VLAN </span>
-                                                <div class="col">
-                                                    <select class="form-control" wire:model="ip_vlan2">
-                                                        <option>--Select option--</option>
-                                                        @foreach ($choix as $choi)
-                                                            <option value="{{ $choi->option }}">{{ $choi->option }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="col"> 
+                                                    <input type="text" class="form-control" wire:model="ip_vlan2"
+                                                        placeholder="Entrer du text" required> 
                                                     <div class="input-group">
                                                         <input type="date" class="form-control"
                                                             wire:model="ip_vlan_start2">
