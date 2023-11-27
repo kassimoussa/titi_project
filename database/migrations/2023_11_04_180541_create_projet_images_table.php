@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projet_images', function (Blueprint $table) {
             $table->id();
-            $table->string("site")->nullable();  
+            $table->bigInteger("site_id")->nullable();  
             $table->string("type")->nullable();   
             $table->string("image_name")->nullable();
             $table->string("public_path")->nullable();

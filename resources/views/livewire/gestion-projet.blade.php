@@ -225,27 +225,46 @@
                             <x-custom-onu-td :txt="$projet->onu" />
                             <x-custom-td :txt="$projet->rack" />
                             <x-custom-td :txt="$projet->fiber" />
-                            <x-custom-td :txt="$projet->ip_vlan" />
+                            <x-custom-onu-td :txt="$projet->ip_vlan" />
                             <x-custom-td :txt="$projet->ssh" />
                             <x-custom-td :txt="$projet->snmp" />
                             <x-custom-td :txt="$projet->migration" />
 
 
-                            <td class="td-actions d-flex ">
-                                <a class="btn btn-transparent btn-xs dropdown-item" data-bs-toggle="modal"
+                            <td class="td-actions d-flex justify-content-center ">
+                                <a class="btn btn-transparent btn-xs" data-bs-toggle="modal"
                                     data-bs-target="#edit_projet" wire:click="loadid('{{ $projet->id }}')">
                                     <i class="fas fa-edit" title="Modifier"></i>
                                 </a>
-                                {{-- <a wire:click="images('{{ $projet->id }}')"
-                                    class="btn btn-transparent btn-xs dropdown-item">
-                                    <i class="fas fa-camera"></i> Images
-                                </a> --}}
-                                {{-- <a href="{{ url('/projets/equipementProjet', $projet) }}"
-                            class="btn btn-transparent btn-xs dropdown-item">
-                            <i class="fas fa-eye"></i> Voir +
-                        </a> --}}
-                                <a class="btn btn-transparent btn-xs dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#delete" wire:click="loadid('{{ $projet->id }}')">
+                                <div class="dropdown-center" wire:ignore>
+                                    <a data-bs-toggle="dropdown" aria-expanded="false"
+                                        class="btn btn-transparent btn-xs dropdown-toggle">
+                                        <i class="fas fa-images" title="Images"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#add_image"
+                                                wire:click="loadid('{{ $projet->id }}')"><i
+                                                    class="fas fa-plus-circle"></i> Ajouter</button></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#show_image"
+                                                wire:click="loadid('{{ $projet->id }}')"><i class="fas fa-eye"></i>
+                                                Voir</button></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#delete_image"
+                                                wire:click="loadid('{{ $projet->id }}')"><i
+                                                    class="fas fa-trash"></i>
+                                                Supprimer</button></li>
+                                    </ul>
+                                </div>
+                                <a class="btn btn-transparent btn-xs" data-bs-toggle="modal" data-bs-target="#delete"
+                                    wire:click="loadid('{{ $projet->id }}')">
                                     <i class="fas fa-trash-alt" title="Supprimer"></i>
                                 </a>
                             </td>
@@ -444,5 +463,132 @@
             </div>
         </div>
 
+
+        <div wire:ignore.self class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="show_image"
+            tabindex="-1" aria-labelledby="voirtoutrTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable  modal-fullscreen   " role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white d-flex justify-content-between">
+                        <h3>Les images du Rack de {{ $site2 }} </h3>
+                        <div>
+                            <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal"><i
+                                    class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-auto" style="max-width: 600px;">
+                            @if ($images->isNotEmpty())
+                                <div id="carouselExample" class="carousel carousel-dark slide  carousel-fade"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach ($images as $index => $image)
+                                            <div
+                                                class="carousel-item {{ $index === 0 ? 'active' : '' }}  d-flex justify-content-center">
+                                                <img src="{{ asset($image->storage_path) }}" class="d-block w-75"
+                                                    alt="Image {{ $index + 1 }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            @else
+                                <p>Aucune image disponible.</p> <!-- French translation: No images available. -->
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div wire:ignore.self class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="add_image"
+            tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  modal-lg " role="document">
+                <div class="modal-content">
+                    <form wire:submit.prevent="storeImage">
+                        <div class="modal-header bg-dark text-white d-flex justify-content-between">
+                            <h3>Ajouter </h3>
+                            <div>
+                                <button type="submit" class="btn btn-primary fw-bold">Enregistrer</button>
+                                <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal"><i
+                                        class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="file" wire:model.lazy="imageRack" class="form-control" accept="image/*">
+                            @error('imageRack')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div wire:ignore.self class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="delete_image"
+            tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  modal-lg " role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white d-flex justify-content-between">
+                        <h3>Suppression image </h3> 
+                        <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal"><i
+                            class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered border-dark table-sm   text-center align-middle"
+                            id="">
+                            <tr class=" table-dark ">
+                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            @if ($images->isNotEmpty())
+                                @php
+                                    $cntimg = 1;
+                                    $delimg = 'delimg' . $cntimg;
+                                @endphp
+                                @foreach ($images as $image)
+                                    <tr>
+                                        <td>{{ $cntimg }}</td>
+                                        <td><img style="width: 100px; height: 160px; oject-fit: cover;" src="{{ asset($image->storage_path) }}"
+                                            alt="Image du rack" ></td>
+                                        <td>
+                                            <button class="btn btn-danger" wire:click="delete_img('{{ $image->id }}')">
+                                                <i class="fas fa-trash"></i>Supprimer
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $cntimg = $cntimg + 1;
+                                        $delimg = 'delimg' . $cntimg;
+                                    @endphp
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="10">Aucune image disponible.</td>
+                                </tr>
+                            @endif
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </div>

@@ -4,12 +4,17 @@ namespace App\Http\Livewire;
 
 use App\Models\Choix;
 use App\Models\Projet;
+use App\Models\ProjetImages;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class GestionProjet extends Component
 {
-    public $projets, $projet_id, $site, $choix, $total_per;
+    use WithFileUploads;
+
+    public $projets, $projet_id, $site, $choix, $total_per, $images, $image_rack, $imageRack;
     public $site2, $installation2, $installation_per2, $configuration2, $configuration_per2, $total_per2;
     public $installation, $installation_per;
     public $onu, $onu_start, $onu_end, $onu_per;
@@ -345,7 +350,16 @@ class GestionProjet extends Component
     public function delete()
     {
         $projet = Projet::find($this->projet_id);
+        $images = ProjetImages::where('site_id', $this->projet_id)->get(); 
+
+        foreach ($images as $image)
+        {
+            Storage::delete($image->public_path);
+
+            $image->delete();
+        }
         $projet->delete();
+
         $this->getProjets();
 
         $this->dispatchBrowserEvent(
@@ -354,14 +368,65 @@ class GestionProjet extends Component
         );
     }
 
-    public function images($projet_id)
+    public function delete_img($image_id)
+    { 
+        $image = ProjetImages::find($image_id);
+
+        Storage::delete($image->public_path);
+        $image->delete();
+
+        $this->getImages();
+
+        $this->dispatchBrowserEvent(
+            'alert',
+            ['type' => 'success',  'message' => 'Suppression éffectuée avec succès!']
+        );
+    }
+
+
+
+    public function getImages()
     {
-        return redirect()->route('images')->with($projet_id);
+        $projet_id = $this->projet_id;
+        $this->images = ProjetImages::where('site_id', $projet_id)->get(); 
+    }
+
+    public function storeImage()
+    {
+        
+        /* $this->validate([
+            'imageRack' => 'image|max:1024', // 1MB Max
+        ]); */
+
+        $image = new ProjetImages();
+        $image->site_id = $this->projet_id; 
+        $image->type = "Rack"; 
+        $image_name = time() . '.' . $this->imageRack->getClientOriginalExtension();
+        $image->image_name =  $image_name;
+        $image->public_path = "public/images/" . $image_name;
+        $image->storage_path = "storage/images/" . $image_name; 
+        $query = $image->save();
+        if ($query) { 
+            $this->imageRack->storeAs('public/images', $image_name); 
+            $this->getImages();
+            $this->dispatchBrowserEvent(
+                'alert',
+                ['type' => 'success',  'message' => 'Ajout réussi!']
+            );
+            $this->dispatchBrowserEvent('close-modal');
+        } else {
+            $this->dispatchBrowserEvent(
+                'alert',
+                ['type' => 'error',  'message' => "Erreur lors de l'ajout!"]
+            ); 
+            $this->dispatchBrowserEvent('close-modal');
+        }
     }
 
     public function render()
     {
         $this->getProjets();
+        $this->getImages();
         return view('livewire.gestion-projet');
     }
 }

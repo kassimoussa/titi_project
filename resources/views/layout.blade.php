@@ -89,6 +89,19 @@
         input, select, span {
             border-radius: 0 !important;
         }
+
+        .custcard {
+            height: 200px;
+            width: 150px;
+
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 
